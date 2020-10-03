@@ -6,7 +6,7 @@ import java.util.List;
 public class PokemonResponse {
 
     private String next;
-    private List<Pokemon> results;
+    private List<PokemonResult> results;
 
     public String getNext() {
         return next;
@@ -16,11 +16,11 @@ public class PokemonResponse {
         this.next = next;
     }
 
-    public List<Pokemon> getResults() {
+    public List<PokemonResult> getResults() {
         return results;
     }
 
-    public void setResults(List<Pokemon> results) {
+    public void setResults(List<PokemonResult> results) {
         this.results = results;
     }
 }

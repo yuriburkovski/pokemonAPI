@@ -1,14 +1,24 @@
 package pl.sdaacademy.PokemonAcademyApi.app_loader.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
+@Repository
 public class PokeApiRepository {
-    private final String URL = "https://pokeapi.co/api/v2/pokemon?limit=%d&offset=%d";
+    private final String url;
 
-    private  RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-    public PokemonResponse getPokemon(int offset, int limit){
-        return restTemplate.getForObject(String.format(URL, limit, offset), PokemonResponse.class);
+    @Autowired
+    public PokeApiRepository(RestTemplate restTemplate, @Value("${pokeapi.url}") String url) {
+        this.restTemplate = restTemplate;
+        this.url = url;
+    }
+
+    public PokemonResponse getPokemon(int offset, int limit) {
+        return restTemplate.getForObject(String.format(url, limit, offset), PokemonResponse.class);
     }
 
 }

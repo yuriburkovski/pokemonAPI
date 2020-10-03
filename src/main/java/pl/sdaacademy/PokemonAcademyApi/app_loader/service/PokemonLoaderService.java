@@ -1,36 +1,49 @@
 package pl.sdaacademy.PokemonAcademyApi.app_loader.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.Pokemon;
-import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.PokemonRepository;
+import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.*;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PokemonLoaderService {
 
     private PokemonRepository pokemonRepository;
+    private PokeApiRepository pokeApiRepository;
+    private PokemonTransformer pokemonTransformer;
+    private int startOffset;
+    private final int limit;
 
     @Autowired
-    public PokemonLoaderService(PokemonRepository pokemonRepository){
+    public PokemonLoaderService(PokemonRepository pokemonRepository,
+                                PokeApiRepository pokeApiRepository,
+                                PokemonTransformer pokemonTransformer
+            , @Value("${pokeapi.start_offset}") int startOffset
+            , @Value("${pokeapi.limit}") int limit) {
         this.pokemonRepository = pokemonRepository;
+        this.pokeApiRepository = pokeApiRepository;
+        this.pokemonTransformer = pokemonTransformer;
+        this.startOffset = startOffset;
+        this.limit = limit;
     }
 
-    public List<Pokemon> getAllPokemon(){
-        return pokemonRepository.findAll();
-    }
+    @PostConstruct
+    public void getPokemonList() {
+        PokemonResponse pokemonResponse;
+        List<PokemonResult> pokemonResults = new ArrayList<>();
 
-    public Pokemon addPokemon(Pokemon pokemonToAdd){
-        pokemonRepository.save(pokemonToAdd);
-        return pokemonToAdd;
-    }
+        do {
+            pokemonResponse = pokeApiRepository.getPokemon(startOffset, limit);
+            pokemonResults.addAll(pokemonResponse.getResults());
+            startOffset += limit;
+        } while (pokemonResponse.getNext() != null);
 
-    public Pokemon deletePokemon(int id) throws EmptyResultDataAccessException{
-        pokemonRepository.deleteById(id);
-        return pokemonRepository.getOne(id);
+        List<Pokemon> pokemons = pokemonTransformer.transformToPokemonList(pokemonResults);
+        pokemonRepository.saveAll(pokemons);
     }
-
 
 }
