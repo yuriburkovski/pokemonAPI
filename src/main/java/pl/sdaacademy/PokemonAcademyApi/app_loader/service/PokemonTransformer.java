@@ -1,8 +1,8 @@
 package pl.sdaacademy.PokemonAcademyApi.app_loader.service;
 
 import org.springframework.stereotype.Component;
-import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.Pokemon;
 import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.PokemonResult;
+import pl.sdaacademy.PokemonAcademyApi.common.repository.Pokemon;
 
 import java.util.List;
 import java.util.stream.Collectors;

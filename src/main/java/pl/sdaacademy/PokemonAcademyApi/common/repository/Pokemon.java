@@ -1,4 +1,4 @@
-package pl.sdaacademy.PokemonAcademyApi.app_loader.repository;
+package pl.sdaacademy.PokemonAcademyApi.common.repository;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

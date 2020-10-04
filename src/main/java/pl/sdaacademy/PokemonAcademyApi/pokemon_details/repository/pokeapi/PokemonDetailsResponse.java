@@ -1,6 +1,9 @@
-package pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository;
+package pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.ability.Ability;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.image.Sprites;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.type.Types;
 
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class PokemonDetailsResponse {
     public void setName(String name) {
         this.name = name;
     }
+
     public int getHeight() {
         return height;
     }

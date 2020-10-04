@@ -2,13 +2,12 @@ package pl.sdaacademy.PokemonAcademyApi.pokemon_details.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.Pokemon;
-import pl.sdaacademy.PokemonAcademyApi.app_loader.repository.PokemonRepository;
+import pl.sdaacademy.PokemonAcademyApi.common.repository.Pokemon;
+import pl.sdaacademy.PokemonAcademyApi.common.repository.PokemonRepository;
+import pl.sdaacademy.PokemonAcademyApi.common.service.NoPokemonFoundException;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetails;
-import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetailsRepository;
-import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetailsResponse;
-
-import java.util.Optional;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokemonDetailsResponse;
 
 @Service
 public class PokemonDetailService {

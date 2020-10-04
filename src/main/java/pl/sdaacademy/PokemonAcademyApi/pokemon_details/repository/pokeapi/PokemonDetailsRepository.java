@@ -1,4 +1,4 @@
-package pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository;
+package pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

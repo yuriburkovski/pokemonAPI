@@ -15,12 +15,12 @@ public class PokemonController {
     public final PokemonDetailService pokemonDetailService;
 
     @Autowired
-    public PokemonController(PokemonDetailService pokemonDetailService){
+    public PokemonController(PokemonDetailService pokemonDetailService) {
         this.pokemonDetailService = pokemonDetailService;
     }
 
     @GetMapping("{name}")
-    public PokemonDetails getPokemonDetails(@PathVariable String name){
+    public PokemonDetails getPokemonDetails(@PathVariable String name) {
         return pokemonDetailService.getPokemonDetails(name);
     }
 

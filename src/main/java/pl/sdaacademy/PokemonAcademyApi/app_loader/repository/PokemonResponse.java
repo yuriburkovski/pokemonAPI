@@ -1,6 +1,5 @@
 package pl.sdaacademy.PokemonAcademyApi.app_loader.repository;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 public class PokemonResponse {
