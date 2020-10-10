@@ -6,7 +6,8 @@ import pl.sdaacademy.PokemonAcademyApi.common.repository.Pokemon;
 import pl.sdaacademy.PokemonAcademyApi.common.repository.PokemonRepository;
 import pl.sdaacademy.PokemonAcademyApi.common.service.NoPokemonFoundException;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetails;
-import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetailsRepository;
+import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokeApiDetailsRepository;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokemonDetailsResponse;
 
 import java.util.List;
@@ -17,36 +18,57 @@ import java.util.stream.Collectors;
 public class PokemonDetailService {
 
     private final PokemonRepository pokemonRepository;
-    private final PokemonDetailsRepository pokemonDetailsRepository;
+    private final PokeApiDetailsRepository pokeApiDetailsRepository;
     private final PokemonDetailsTransformer pokemonDetailsTransformer;
+    private final PokemonDetailsRepository pokemonDetailsRepository;
 
     @Autowired
     public PokemonDetailService(PokemonRepository pokemonRepository,
-                                PokemonDetailsRepository pokemonDetailsRepository,
-                                PokemonDetailsTransformer pokemonDetailsTransformer) {
+                                PokeApiDetailsRepository pokeApiDetailsRepository,
+                                PokemonDetailsTransformer pokemonDetailsTransformer,
+                                PokemonDetailsRepository pokemonDetailsRepository) {
         this.pokemonRepository = pokemonRepository;
-        this.pokemonDetailsRepository = pokemonDetailsRepository;
+        this.pokeApiDetailsRepository = pokeApiDetailsRepository;
         this.pokemonDetailsTransformer = pokemonDetailsTransformer;
+        this.pokemonDetailsRepository = pokemonDetailsRepository;
     }
 
     public PokemonDetails getPokemonDetails(String name) {
         Pokemon pokemonTemp = pokemonRepository.findByName(name).orElseThrow(() -> {
             throw new NoPokemonFoundException(name);
         });
-        PokemonDetailsResponse response = pokemonDetailsRepository
-                .getPokemonDetails(pokemonTemp.getUrl());
-        return pokemonDetailsTransformer.transformToPokemonDetails(response);
+        return providePokemonDetails(pokemonTemp);
     }
 
     public List<PokemonDetails> getPokemonDetailsList(List<String> names) {
-        return names.stream().map(pokemonRepository::findByName)
+        List<PokemonDetails> pokemonsList = names.stream()
+                .map(pokemonRepository::findByName)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(Pokemon::getUrl)
-                .map(pokemonDetailsRepository::getPokemonDetails)
-                .map(pokemonDetailsTransformer::transformToPokemonDetails)
+                .map(this::providePokemonDetails)
                 .collect(Collectors.toList());
-
+        pokemonsList.forEach(this::savePokemonDetails);
+        return pokemonsList;
     }
 
+    private void savePokemonDetails(PokemonDetails details) {
+        pokemonDetailsRepository.findById(details.getName())
+                .orElseGet(() -> pokemonDetailsRepository.save(details));
+    }
+
+    private PokemonDetails providePokemonDetails(Pokemon pokemon) {
+        return pokemonDetailsRepository
+                .findById(pokemon.getName())
+                .orElseGet(() -> {
+                    PokemonDetails pokemonDetails = getPokemonDetailsFromApi(pokemon.getUrl());
+                    savePokemonDetails(pokemonDetails);
+                    return pokemonDetails;
+                });
+    }
+
+    private PokemonDetails getPokemonDetailsFromApi(String url) {
+        PokemonDetailsResponse response = pokeApiDetailsRepository
+                .getPokemonDetails(url);
+        return pokemonDetailsTransformer.transformToPokemonDetails(response);
+    }
 }

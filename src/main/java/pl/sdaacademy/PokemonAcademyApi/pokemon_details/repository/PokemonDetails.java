@@ -1,16 +1,21 @@
 package pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.List;
 
-
+@Entity
 public class PokemonDetails {
-
+    @Id
+    private String name;
+    @ElementCollection
     private List<String> abilities;
+    @ElementCollection
     private List<String> types;
     private int height;
     private int weight;
     private String imageUrl;
-    private String name;
 
     public PokemonDetails() {
     }
