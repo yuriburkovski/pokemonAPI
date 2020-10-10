@@ -9,6 +9,10 @@ import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetails
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.pokeapi.PokemonDetailsResponse;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class PokemonDetailService {
 
@@ -32,6 +36,17 @@ public class PokemonDetailService {
         PokemonDetailsResponse response = pokemonDetailsRepository
                 .getPokemonDetails(pokemonTemp.getUrl());
         return pokemonDetailsTransformer.transformToPokemonDetails(response);
+    }
+
+    public List<PokemonDetails> getPokemonDetailsList(List<String> names) {
+        return names.stream().map(pokemonRepository::findByName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(Pokemon::getUrl)
+                .map(pokemonDetailsRepository::getPokemonDetails)
+                .map(pokemonDetailsTransformer::transformToPokemonDetails)
+                .collect(Collectors.toList());
+
     }
 
 }
