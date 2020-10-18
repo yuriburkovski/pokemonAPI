@@ -25,16 +25,19 @@ public class PokemonController {
     }
 
     @GetMapping("{name}")
+    @CrossOrigin
     public PokemonDetails getPokemonDetails(@PathVariable String name) {
         return pokemonDetailService.getPokemonDetails(name);
     }
 
     @GetMapping()
+    @CrossOrigin
     public List<PokemonDetails> getPokemonDetailsList(@RequestParam List<String> names) {
         return pokemonDetailService.getPokemonDetailsList(names);
     }
 
     @GetMapping("/list")
+    @CrossOrigin
     public PokemonList getPokemonsList(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
         return pokemonListService.getPokemonListItem(page, size);
     }
