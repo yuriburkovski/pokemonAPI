@@ -11,7 +11,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(value = NoPokemonFoundException.class)
     public ResponseEntity<Object> exception(NoPokemonFoundException exception) {
-        return new ResponseEntity<Object>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }

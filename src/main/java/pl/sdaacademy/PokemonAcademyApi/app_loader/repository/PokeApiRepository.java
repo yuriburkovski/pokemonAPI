@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class PokeApiRepository {
     private final String url;
 
-    private RestTemplate restTemplate;
+    private final  RestTemplate restTemplate;
 
     @Autowired
     public PokeApiRepository(RestTemplate restTemplate, @Value("${pokeapi.url}") String url) {

@@ -16,9 +16,9 @@ import java.util.List;
 @Service
 public class PokemonLoaderService {
 
-    private PokemonRepository pokemonRepository;
-    private PokeApiRepository pokeApiRepository;
-    private PokemonTransformer pokemonTransformer;
+    private final PokemonRepository pokemonRepository;
+    private final PokeApiRepository pokeApiRepository;
+    private final PokemonTransformer pokemonTransformer;
     private int startOffset;
     private final int limit;
 

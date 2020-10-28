@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetails;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.service.PokemonDetailService;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_list_item.repository.PokemonList;
-import pl.sdaacademy.PokemonAcademyApi.pokemon_list_item.repository.PokemonListItem;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_list_item.service.PokemonListService;
 
 import java.util.List;
