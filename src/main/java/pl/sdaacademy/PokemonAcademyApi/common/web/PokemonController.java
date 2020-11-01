@@ -1,4 +1,4 @@
-package pl.sdaacademy.PokemonAcademyApi.pokemon_details.web;
+package pl.sdaacademy.PokemonAcademyApi.common.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,6 +6,9 @@ import pl.sdaacademy.PokemonAcademyApi.pokemon_details.repository.PokemonDetails
 import pl.sdaacademy.PokemonAcademyApi.pokemon_details.service.PokemonDetailService;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_list_item.repository.PokemonList;
 import pl.sdaacademy.PokemonAcademyApi.pokemon_list_item.service.PokemonListService;
+import pl.sdaacademy.PokemonAcademyApi.registration.repository.PokemonApiUser;
+import pl.sdaacademy.PokemonAcademyApi.registration.service.PokemonApiUserDto;
+import pl.sdaacademy.PokemonAcademyApi.registration.service.PokemonUserApiService;
 
 import java.util.List;
 
@@ -15,12 +18,14 @@ public class PokemonController {
 
     public final PokemonDetailService pokemonDetailService;
     private final PokemonListService pokemonListService;
+    private final PokemonUserApiService pokemonUserApiService;
 
     @Autowired
     public PokemonController(PokemonDetailService pokemonDetailService,
-                             PokemonListService pokemonListService) {
+                             PokemonListService pokemonListService, PokemonUserApiService pokemonUserApiService) {
         this.pokemonDetailService = pokemonDetailService;
         this.pokemonListService = pokemonListService;
+        this.pokemonUserApiService = pokemonUserApiService;
     }
 
     @GetMapping("{name}")
@@ -41,4 +46,9 @@ public class PokemonController {
         return pokemonListService.getPokemonListItem(page, size);
     }
 
+    @PostMapping("/signup")
+    @CrossOrigin
+    public PokemonApiUserDto addUser(@RequestBody PokemonApiUser pokemonApiUser) {
+        return pokemonUserApiService.addUser(pokemonApiUser);
+    }
 }

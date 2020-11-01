@@ -11,19 +11,22 @@ public class PokemonUserApiService {
 
     private final PasswordEncoder passwordEncoder;
     private final PokemonApiUserRepository pokemonApiUserRepository;
+
     @Autowired
-    public PokemonUserApiService(PasswordEncoder passwordEncoder, PokemonApiUserRepository pokemonApiUserRepository){
+    public PokemonUserApiService(PasswordEncoder passwordEncoder, PokemonApiUserRepository pokemonApiUserRepository) {
         this.passwordEncoder = passwordEncoder;
         this.pokemonApiUserRepository = pokemonApiUserRepository;
     }
-    public PokemonApiUser getPokemonApiUserByLogin(String login){
+
+    public PokemonApiUser getPokemonApiUserByLogin(String login) {
         return pokemonApiUserRepository.findById(login)
                 .orElseThrow(() -> {
                     throw new UserNotFoundException(String.format("User with %s could not found in DB!", login));
                 });
     }
-    public PokemonApiUserDto addUser(PokemonApiUser pokemonApiUser){
-        pokemonApiUserRepository.findById(pokemonApiUser.getLogin()).ifPresent((user)->{
+
+    public PokemonApiUserDto addUser(PokemonApiUser pokemonApiUser) {
+        pokemonApiUserRepository.findById(pokemonApiUser.getLogin()).ifPresent((user) -> {
             throw new UserAlreadyExistException(String.format("User with %s is already exist in DB!",
                     pokemonApiUser.getLogin()));
         });
