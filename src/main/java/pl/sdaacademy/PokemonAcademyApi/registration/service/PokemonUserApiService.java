@@ -20,7 +20,7 @@ public class PokemonUserApiService {
 
     public PokemonApiUser getPokemonApiUserByLogin(String login) {
         return pokemonApiUserRepository.findById(login)
-                .orElseThrow(() -> {
+                .<UserNotFoundException>orElseThrow(() -> {
                     throw new UserNotFoundException(String.format("User with %s could not found in DB!", login));
                 });
     }
