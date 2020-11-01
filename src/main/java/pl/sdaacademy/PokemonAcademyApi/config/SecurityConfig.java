@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pokemons/list").authenticated()
                 .antMatchers("/pokemons/signup").permitAll();
         http.csrf().disable();
+        http.cors();
         http.addFilter(new AuthenticationFilter(authenticationManager(),
                 securityKey,
                 authorizationType,
