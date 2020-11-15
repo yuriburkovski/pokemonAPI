@@ -17,12 +17,12 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(value = UserAlreadyExistException.class)
-    public ResponseEntity<Object> userAlreadyExistException(UserAlreadyExistException exception){
+    public ResponseEntity<Object> userAlreadyExistException(UserAlreadyExistException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<Object> userNotFoundException(UserNotFoundException exception){
+    public ResponseEntity<Object> userNotFoundException(UserNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 

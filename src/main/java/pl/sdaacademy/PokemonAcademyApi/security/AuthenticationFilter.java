@@ -65,7 +65,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setSubject(((User) authResult.getPrincipal()).getUsername())
                 .signWith(SignatureAlgorithm.HS512, securityKey.getBytes())
                 .compact();
-        response.addHeader("Access-Control-Expose-Headers","Authorization");
+        response.addHeader("Access-Control-Expose-Headers", "Authorization");
         response.addHeader(authorizationHeaderName, authorizationType + " " + token);
     }
 }

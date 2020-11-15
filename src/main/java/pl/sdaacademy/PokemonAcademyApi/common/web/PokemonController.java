@@ -30,7 +30,7 @@ public class PokemonController {
 
     @GetMapping("{name}")
     @CrossOrigin
-    public PokemonDetails getPokemonDetails(@PathVariable String name) {
+    public PokemonDetails getPokemoDetails(@PathVariable String name) {
         return pokemonDetailService.getPokemonDetails(name);
     }
 
