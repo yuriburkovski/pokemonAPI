@@ -8,7 +8,7 @@ The next stack of technologies was used:
 
 project was deployed in Heroku:  https://pokemon-academy-api.herokuapp.com/
 
-To check how does it work, I'm suggest to use Swagger 
+To check how does it work, I suggest to use Swagger 
 ( https://pokemon-academy-api.herokuapp.com/swagger-ui.html )
 
 /* "admin" as login and "test" as password
