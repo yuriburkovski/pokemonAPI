@@ -7,7 +7,10 @@ The next stack of technologies was used:
 - system of version control Git;
 
 project was deployed in Heroku:  https://pokemon-academy-api.herokuapp.com/
-To check how does it work, I'm suggest to use Swagger ( https://pokemon-academy-api.herokuapp.com/swagger-ui.html )
+
+To check how does it work, I'm suggest to use Swagger 
+( https://pokemon-academy-api.herokuapp.com/swagger-ui.html )
+
 /* "admin" as login and "test" as password
 are adding by default to the database */
 
